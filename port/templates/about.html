@@ -1,0 +1,116 @@
+{% extends "basic.html" %}
+{% block body %}
+{% block aboutactive %} active {% endblock aboutactive %}
+{% block title %} AboutMe {% endblock %}
+<br>
+<br>
+{% load static %}
+<script type="text/javascript">
+    function done()
+    {
+        let name = document.getElementById('name').value;
+        let email = document.getElementById('email').value;
+        let subject = document.getElementById('subject').value;
+        let message = document.getElementById('message').value;
+        if (name != "" && email != "" && subject != "" && message != "")
+        {
+            alert("Form submitted successfully.");
+        }
+        else
+        {
+            alert("Form fields cannot be empty. Please Fill them first.");
+        }
+    }
+</script>
+<section class="masthead bg-primary text-white text-center" id="about">
+            <div class="container">
+                <!-- About Section Heading-->
+                <div class="text-center">
+                    <h2 class="page-section-heading d-inline-block text-white">ABOUT - Rohit Saini</h2>
+                </div>
+                <!-- Icon Divider-->
+                <div class="divider-custom divider-light">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- About Section Content-->
+                <img class="masthead-avatar mb-5" src="{%static 'assets/img/avataaars.svg' %}" alt="image">
+                <div class="container text-center">
+                    <div class="container d-flex align-items-center flex-column">
+                        <p class="">Hey There, I am a student of BCA from I.T.S. Ghaziabad college. I have done C/C++, Python Programming Languages. I also know Front-End Languages like HTML, CSS. And I also know WordPress.I am an AI Enthusiast. I have also learned some Python modules like - Flask, Tkinter, and learning more day-to-day.I am a fast learner and well-focused person. Currently seeking for some Projects to apply my skills.</p>
+                    </div>
+                </div>
+            </div>
+</section>
+
+<section>
+    <div class="container d-flex justify-content-center shadow-sm mt-2 p-2">
+        <div class="row">
+            <div class="">
+                <img src="{%static 'assets/img/py.png' %}" alt="image" style="width: 90px;" class="p-2">
+                <img src="{%static 'assets/img/c.png' %}" alt="image" style="width: 100px;" class="p-2">
+                <img src="{%static 'assets/img/cpp.png' %}" alt="image" style="width: 90px;" class="p-2">
+                <img src="{%static 'assets/img/js.png' %}" alt="image" style="width: 90px;" class="p-2">
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<section>
+    <div class="container mt-4 d-flex justify-content-center">
+    <div class="card mb-3  border-0 shadow-sm" style="max-width: 912px;">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <img src="..." class="card-img" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+
+
+
+<section class="page-section" id="contact">
+<div class="text-center">
+    <h2 class="page-section-heading text-secondary d-inline-block mb-0">CONTACT</h2>
+</div>
+    <!-- Icon Divider-->
+    <div class="divider-custom">
+        <div class="divider-custom-line"></div>
+        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+        <div class="divider-custom-line"></div>
+    </div>
+
+    <div class="align-items-center">
+        <p class="text-center w-responsive mx-auto mb-5">Do you have any questions?<br>Please do not hesitate to contact me directly.</p>
+
+        <div class="container justify-content-center">
+        <form id="contact-form" name="contact-form" action="/about/" method="POST">{% csrf_token %}
+            <input type="text" id="name" name='name' class="form-control my-2" placeholder="Your name" required width="10">
+
+            <input type="text" id="email" name='email' placeholder="Your mail" class="form-control my-2" required>
+
+            <input type="text" id="subject" name='subject' placeholder="Subject" class="form-control my-2" required>
+
+            <textarea type="text" id="message" name='message' rows="2" class="form-control md-textarea" placeholder="Your Message" required></textarea>
+
+            <br>
+            <button class="btn btn-primary" href="about.html", onclick="done()">Submit</button>
+        </form>
+        </div>
+    </div>
+
+
+</section>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "basic.html" %}
+{% block body %}
+{% block title %} Search Results - ({{ posts|length }}) {% endblock %}
+<br><br>
+<div class="container my-4">
+    {% if posts|length > 0 %}
+    <h1>Search Results : ({{ posts|length }}) </h1>
+    <div class="row">
+        <div class="col-md-8">
+        <br>
+          <div class="card mb-4 border-0">
+          	<span class="border-0"></span>
+              {% for post in posts %}
+            <!-- <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap"> -->
+              <div class="card-body">
+
+              <h2 class="card-title">{{ post.title }}</h2>
+              <p class="card-text">{{ post.content|slice:"0:200"|safe }} . . .</p>
+              </div>
+              <div class="text-muted mx-4">
+                Date & Time : {{ post.time }}
+              </div>
+              <div class="text-muted mb-4 mx-4">By - {{ post.author }}</div>
+              <a href="/blog/{{post.slug}}" class="btn btn-primary">Read More &rarr;</a>
+              {% endfor %}
+            <br>
+          </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="container my-6">
+    <hr class="text-center mb-4" style="border: 2px solid #1abc9c;">
+    <h1 class="text-center text-primary mb-4">Sorry we could not find any results.</h1>
+    <ul class="text-center text-primary mb-4" style="list-style: none;">
+        <li>Make sure that all words are spelled correctly.</li>
+        <li>Try different keywords.</li>
+        <li>Try more general keywords.</li>
+        <li>Try fewer keywords.</li>
+    </ul>
+    <hr class="text-center" style="border: 2px solid #1abc9c;">
+    </div>
+    {% endif %}
+</div>
+{% endblock%}

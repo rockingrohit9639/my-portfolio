@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>{% load static %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>{% block title %} {% endblock %}</title>
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{%static 'css/styles.css' %}" rel="stylesheet">
+        <!-- Fonts CSS-->
+        <link rel="stylesheet" href="{%static 'css/heading.css' %}">
+        <link rel="stylesheet" href="{%static 'css/body.css' %}">
+        <script src="https://s3.amazonaws.com/myadvobuck/static/libs/typed.min.js"></script>
+        <!-- Custom styles for this template -->
+        <link href="{%static 'css/blog-home.css' %}" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+    </head>
+    <body id="page-top">
+        <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
+            <div class="container"><a class="navbar-brand js-scroll-trigger" href="/" style="font-family: 'Grenze Gotisch', cursive;font-size: 49px;">Rohit Saini</a>
+                <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% block homeactive %} {% endblock homeactive %}" href="/">Home</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger  {% block blogactive %} {% endblock blogactive %}" href="/blog/">Blog</a>
+                        </li>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% block portactive %} {% endblock portactive %}" href="/portfolio/">Projects</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger {% block aboutactive %} {% endblock aboutactive %}" href="/about/">AboutMe</a>
+                        </li>
+                        {% if  user.is_authenticated %}
+
+                        <div class="dropdown">
+                            <li class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger dropdown-toggle text-white" type="button" id="loginsignup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Welcome {{ request.user }}
+                            </li>
+                            <div class="dropdown-menu" aria-labelledby="loginsignup">
+                                <a class="dropdown-item" href="/logout/">LogOut</a>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="dropdown">
+                            <li class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger dropdown-toggle text-white" type="button" id="loginsignup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Login/Signup
+                            </li>
+                            <div class="dropdown-menu" aria-labelledby="loginsignup">
+                                <a class="dropdown-item" data-toggle="modal" data-target="#login">LogIn</a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#signup">SignUp</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </ul>
+
+                </div>
+            </div>
+            <form method="get" action="/search" class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2 mx-4" type="search" placeholder="Search" aria-label="Search" name="search" id="search">
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </nav>
+        
+        
+        <!-- Login Form -->
+        <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="title" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="title">LogIn</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="/login/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <label for="usernamel">Username</label>
+                        <input type="text" class="form-control" id="usernamel" placeholder="Enter username" name="usernamel">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                        <small id="emailHelp" class="form-text text-muted mx-2">We'll never share your details with anyone else.</small>
+                    </div>
+                    </div>
+                    <div>
+                      <a class="btn close" data-toggle="modal" data-target="#forgotpassword" data-dismiss="modal" aria-label="Close">Forgot Password</a>
+                    </div>
+              <div class="modal-footer mx-4 my-4">
+                <button class="btn btn-primary">Login</button>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+            <!--        SignUp Form-->
+            <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="title2" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="title2">SignUp Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="post" action="/signup/" class="needs-validation">{% csrf_token %}
+                                  <div class="form-row">
+                                    <div class="col-md-4 mb-3">
+                                      <label for="fname">First name</label>
+                                      <input type="text" class="form-control" name="fname" id="fname" placeholder="First name" placeholder="Rohit" required>
+                                      <div class="valid-feedback">
+                                        Looks good!
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                      <label for="lname">Last name</label>
+                                      <input type="text" class="form-control" name="lname" id="lname" placeholder="Last name" placeholder="Saini" required>
+                                      <div class="valid-feedback">
+                                        Looks good!
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                      <label for="username">Username</label>
+                                      <div class="input-group">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="username" name="username" placeholder="Username" aria-describedby="inputGroupPrepend" required>
+                                        <div class="invalid-feedback">
+                                          Please choose a username.
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="">
+                                    <div class="">
+                                      <label for="emailS">Email Address</label>
+                                      <input type="email" class="form-control" id="emailS" name="emailS" placeholder="Email Adderss" required>
+                                      <div class="invalid-feedback">
+                                        Please Provide a valid email address.
+                                      </div>
+                                    </div>
+                                      <br>
+                                    <div class="">
+                                      <label for="passwordS">Password</label>
+                                      <input type="password" class="form-control" name="passwordS" id="passwordS" placeholder="Password" required>
+                                    </div>
+
+                                    <div class="">
+                                      <label for="confirmpassword">Confirm Password</label>
+                                      <input type="password" class="form-control" name="confirmpassword" id="confirmpassword" placeholder="Confirm Password" required>
+                                    </div>
+                                  </div>
+                                  <div class="form-group mt-2">
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="1" id="invalidCheck" required>
+                                      <label class="form-check-label" for="invalidCheck">
+                                        Agree to terms and conditions
+                                      </label>
+                                      <div class="invalid-feedback">
+                                        You must agree before submitting.
+                                      </div>
+                                    </div>
+                                  </div>
+                        <button class="btn btn-primary my-4">SignUp</button>
+                  </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+<!-- Forgot Password -->
+<div class="modal fade" id="forgotpassword" tabindex="-1" role="dialog" aria-labelledby="ftitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ftitle">Forgot Password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST", action="/forgotpass/">{% csrf_token %}
+          <div class="form-group">
+            <label for="emailID">Email address</label>
+            <input type="email" class="form-control" id="emailID" name="emailID" aria-describedby="emailHelp" placeholder="Enter email" required>
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+            <label for="usernameforgot">Username</label>
+            <input type="text" class="form-control" id="usernameforgot" name="usernameforgot" placeholder="Username" required>
+          </div>
+      </div>
+      <div class="modal-footer text-center mb-4">
+        <h3>It will not work it is under development. Thanks.</h3>
+        <!-- <button class="btn btn-primary m-4 mx-4">Submit</button> -->
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% block body %}
+
+
+{% endblock %}
+
+    <footer class="footer text-center">
+            <div class="container">
+                <div class="row">
+                    <!-- Footer Location-->
+                    <div class="col-lg-4 mb-4 mb-lg-0">
+                        <h4 class="mb-4">LOCATION</h4>
+                        <p class="pre-wrap lead mb-0">Ghaziabad, Uttar Pradesh India</p>
+                    </div>
+                    <div class="col-lg-4 mb-4 mb-lg-0">
+                        <h4>Current Time</h4>
+                        <p class="pre-wrap lead my-4" id="time"></p>
+                    </div>
+                    <!-- Footer Social Icons-->
+                    <div class="col-lg-4 mb-4 mb-lg-0">
+                        <h4 class="mb-4">AROUND THE WEB</h4>
+                        <a class="btn btn-outline-light btn-social mx-1" href="https://www.facebook.com/profile.php?id=100007325041744" target="_blank"><i class="fab fa-fw fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/rohit-kumar-saini/" target="_blank"><i class="fab fa-fw fa-linkedin-in"></i></a><a class="btn btn-outline-light btn-social mx-1" href="/"><i class="fab fa-fw fa-dribbble"></i></a>
+                    </div>
+            </div>
+        </footer>
+        <style>
+          #copy:hover{
+            font-size: 20px;
+            transition: 0.3s;
+          }
+        </style>
+        <!-- Copyright Section-->
+        <section class="copyright py-4 text-center text-white">
+            <div class="container" id="copy"><small class="pre-wrap">Copyright &copy;  Rohit Kumar Saini  </small></div>
+        </section>
+        <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
+        <div class="scroll-to-top d-lg-none position-fixed"><a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a></div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{%static 'js/scripts.js' %}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js" integrity="sha512-CEiA+78TpP9KAIPzqBvxUv8hy41jyI3f2uHi7DGp/Y/Ka973qgSdybNegWFciqh6GrN2UePx2KkflnQUbUhNIA==" crossorigin="anonymous"></script>
+      <script>
+        let clock = setInterval(clocktime, 1000);
+        function clocktime()
+        {
+            let d = new Date();
+            let t = d.toLocaleTimeString();
+            let element = document.getElementById("time");
+            element.innerHTML = t;
+        }
+    </script>
+    </body>
+</html>

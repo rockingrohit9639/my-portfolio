@@ -1,0 +1,115 @@
+{% extends "basic.html" %}
+{% block body %}
+{% block title %} {{ post.title }} {% endblock %}
+{% load static  %}
+{% load humanize %}
+{% load extras %}
+<style>
+  .pb-cmnt-container {
+      font-family: Lato;
+      margin-top: 100px;
+  }
+
+  .pb-cmnt-textarea {
+      resize: none;
+      padding: 20px;
+      height: 130px;
+      width: 100%;
+      border: 1px solid #F2F2F2;
+  }
+</style>
+<br><br>
+<div class="container">
+
+    <div class="row">
+
+        <!-- Blog Entries Column -->
+        <div class="col-md-8">
+<!--          <h1 class="my-4"></h1>-->
+
+        <!-- Blog Post -->
+          <div class="mb-4 my-4">
+            <!-- <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap"> -->
+              <div class="card-body">
+              <h2 class="title"> {{ post.title }} </h2>
+              <p class="card-text"> {{ post.content|safe }} </p>
+              </div>
+              <div class="card-footer text-muted">
+                Date & Time : {{ post.time }}
+                  <div class="mr-2">By - {{ post.author}}</div>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>
+
+<div class="container my-4">
+  <h1 class="mx-2">Comments ({{ comments|length }}) - </h1>
+  {% if  user.is_authenticated %}
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-info">
+        <div class="panel-body">
+          <p>Post comments</p>
+          <form action="/postcomment/" method="post">{% csrf_token %}
+          <textarea placeholder="Write your comment here !" class="pb-cmnt-textarea"  name="comment" required></textarea>
+          <input type="hidden" name="postSno" value="{{ post.sno }}">
+          <input type="hidden" name="parentSno" value="">
+          <input type="submit" value="Post Comment" class="btn btn-primary pull-rights">
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <h6 class="text-muted mx-2">Login To Post Comment</h6>
+  {% endif %}
+{% for comment in comments %}
+  <div class="row my-2 shadow-sm p-3 mb-2">
+      <div class="rounded mx-auto d-block pl-5"><img src="{%static 'assets/img/user.png' %}" style="width: 23px;"></div>
+      <div class="col-md-11 ml-0">
+        <b>@{{ comment.user.username }}</b> 
+        <small class="bg-dark p-1 text-white rounded"> {{ comment.timestamp | naturaltime }}</small> 
+        <div>{{ comment.comment }}</div>
+        {% if  user.is_authenticated %}
+        <div>
+          <a class="nav-link" data-toggle="collapse" href="#collapse{{ comment.sno }}" role="button" aria-expanded="false" aria-controls="collapse{{ comment.sno }}">
+            Reply
+          </a>
+          
+        <div class="collapse" id="collapse{{ comment.sno }}">
+          <div class="card card-body border-0">
+          <form method="POST" action="/postcomment/">{% csrf_token %}
+            <div>
+            <textarea class="pb-cmnt-textarea"  name="comment" placeholder="Say something..." required></textarea>
+            <input type="hidden" name="parentSno" value="{{ comment.sno }}">
+            <input type="hidden" name="postSno" value="{{ post.sno }}">
+            <input type="submit" value="Add Reply" class="btn btn-primary float-right">
+          </div>
+        </form>
+          </div>
+        </div>
+        <div class="replies">
+        {% for reply in replies|getVal:comment.sno %}
+        <div class="row my-2">
+                <div class="col-md-1">
+                <img src="{%static 'assets/img/user.png' %}" style="width: 23px;">
+                </div>
+                <div class="col-md-10">
+                  <b>@{{ reply.user.username }}</b> 
+                  <small class="bg-dark p-1 text-white rounded"> {{ reply.timestamp | naturaltime }}</small> 
+                  <div>{{ reply }}</div>
+                </div>
+        </div>
+        {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  
+{% endfor %}
+</div>
+
+
+{% endblock %}

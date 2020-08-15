@@ -1,0 +1,99 @@
+{% extends 'basic.html' %} {% block title %} Home - Rohit Saini {% endblock %}
+{% block body %} {% block homeactive %} active {% endblock homeactive %} {% load
+static %} <br /><br />
+<br />
+{% if messages %} {% for message in messages %}
+<div class="container-fluid">
+  <div
+    class="alert alert-{{ message.tags }} alert-dismissible fade show"
+    role="alert"
+  >
+    <strong>Message : </strong> {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+{% endfor %} {% endif %}
+
+<header
+  class="masthead bg-primary text-white text-center mt-0"
+  style="height: 100vh;"
+>
+  <div class="container d-flex align-items-center flex-column mt-0">
+    <h1
+      class="masthead-heading mb-0"
+      style="text-shadow: 2px 2px 100px #000000;"
+    >
+      ROHIT KUMAR SAINI
+    </h1>
+    <!-- Icon Divider-->
+    <div class="divider-custom divider-light">
+      <div class="divider-custom-line"></div>
+      <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+      <div class="divider-custom-line"></div>
+    </div>
+    <!-- Masthead Subheading-->
+    <div class="bodying  here">
+      <div id="typed-string">
+        <p>- AI Enthausiast -</p>
+        <p>- Python Developer -</p>
+        <p>- C/C++ -</p>
+      </div>
+      <span
+        class="pre-wrap masthead-subheading font-weight-light mb-0"
+        id="typed"
+      ></span>
+    </div>
+  </div>
+</header>
+
+<section class="page-section" id="contact">
+  <div class="container">
+    <!-- Contact Section Heading-->
+    <div class="text-center">
+      <h2 class="page-section-heading text-secondary d-inline-block mb-0">
+        CONTACT
+      </h2>
+    </div>
+    <!-- Icon Divider-->
+    <div class="divider-custom">
+      <div class="divider-custom-line"></div>
+      <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+      <div class="divider-custom-line"></div>
+    </div>
+    <!-- Contact Section Content-->
+    <div class="row justify-content-center">
+      <div class="col-lg-4 phn_number">
+        <div class="d-flex flex-column align-items-center">
+          <div class="icon-contact mb-3"><i class="fas fa-mobile-alt"></i></div>
+          <div class="text-muted">Phone</div>
+          <div class="lead font-weight-bold">
+            <a href="#">+91 9639970146</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 emailadd">
+        <div class="d-flex flex-column align-items-center">
+          <div class="icon-contact mb-3"><i class="far fa-envelope"></i></div>
+          <div class="text-muted">Email</div>
+          <a
+            class="lead font-weight-bold"
+            href="mailto:rohitbhatwara1@gmail.com"
+            >rohitbhatwara1@gmail.com</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  var type = new Typed("#typed", {
+    stringsElement: "#typed-string",
+    typeSpeed: 100,
+    backSpeed: 50,
+    smartBackspace: true,
+    loop: true,
+  });
+</script>
+{% endblock %}
